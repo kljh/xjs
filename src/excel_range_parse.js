@@ -98,8 +98,8 @@ function parse_column_name_to_index(col) {
 
 	var pos = 0;
 	var mult = 1;
-	var A = col.charCodeAt(0);
-	var Z = col.charCodeAt(0);
+	var A = "A".charCodeAt(0);
+	var Z = "Z".charCodeAt(0);
 	for (var i=col.length-1; i>=0; i--) {
 		var v = col.charCodeAt(i) - A + 1;
 		pos += mult*v;
@@ -115,4 +115,16 @@ function info_msg(msg) {
 		print(msg);
 }
 
-parse_range_test();
+
+// Nodejs stuff
+if (typeof module!="undefined") {
+
+	var parser = require("./excel_formula_parse")
+
+	// run tests if this file is called directly
+	if (require.main === module)
+		parse_range_test();
+
+	module.exports.parse_range = parse_range;
+
+}
