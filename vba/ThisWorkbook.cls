@@ -14,6 +14,9 @@ Private Sub Workbook_Open()
     ' Load VBA modules from disk
     Call RemoveVBAModules(ThisWorkbook)
     Call LoadVBAModules(ThisWorkbook.path, ThisWorkbook)
+
+    Call QuickKeys
+    Call AddCustomRightClickBar
 End Sub
 
 Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
@@ -27,7 +30,7 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
         'If MsgBox(ThisWorkbook.Name & " not saved. Save ?", vbYesNo) = vbNo Then
         '    Exit Sub
         'End If
-        
+
         ' Write VBA modules to disk, remove them, and save Excel file
         Call SaveVBAModules(ThisWorkbook.path, ThisWorkbook)
         Call RemoveVBAModules(ThisWorkbook)
@@ -44,14 +47,14 @@ Sub LoadVBAModules(path As String, wbk As Workbook)
     On Error Resume Next
     Set VBProj = wbk.VBProject
     On Error GoTo 0
-    
+
     If VBProj Is Nothing Then
         MsgBox "LoadVBAModules can't run: XLA not trusted." & vbNewLine & _
             "Go to Excel options, Macro security, Trust access to VB Project."
         Exit Sub
     End If
-    
-    
+
+
     Dim fso, folder, file
     Set fso = CreateObject("Scripting.FileSystemObject")
     Set folder = fso.GetFolder(path)
@@ -70,11 +73,11 @@ Sub SaveVBAModules(path As String, wbk As Workbook)
     On Error Resume Next
     Set VBProj = wbk.VBProject
     On Error GoTo 0
-    
+
     If VBProj Is Nothing Then
         Exit Sub
     End If
-    
+
     Dim component As VBIDE.VBComponent
     For Each component In VBProj.VBComponents
         ' Trim empty lines at the beginning and at the end of the code module
@@ -91,7 +94,7 @@ End Sub
 Sub RemoveVBAModules(wbk As Workbook)
     Dim VBProj As VBIDE.VBProject
     Set VBProj = wbk.VBProject
-    
+
     Dim component As VBIDE.VBComponent
     For Each component In VBProj.VBComponents
         If component.Type = vbext_ct_StdModule Then
@@ -104,7 +107,7 @@ End Sub
 ' Trim empty lines at the beginning and at the end of the code module
 Private Sub TrimEmptyLines(component As VBIDE.VBComponent)
     Dim bContinueTrim As Boolean
-    
+
     ' Remove at the beginning
     bContinueTrim = True
     While bContinueTrim
@@ -118,7 +121,7 @@ Private Sub TrimEmptyLines(component As VBIDE.VBComponent)
             End If
         End If
     Wend
-    
+
     ' Remove at the end
     bContinueTrim = True
     While bContinueTrim

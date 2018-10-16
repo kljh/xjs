@@ -1,6 +1,6 @@
 Attribute VB_Name = "modObjectPicture"
 Sub ExportWorksheetPicturesTest(x)
-    ExportWorksheetPictures Activesheet
+    ExportWorksheetPictures ActiveSheet
 End Sub
 
 Sub ExportWorksheetPictures(sht As Worksheet)

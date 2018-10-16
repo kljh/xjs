@@ -73,7 +73,7 @@ Function export_workbook(wbk As Workbook)
         Exit Function
     End If
 
-    Call d.Add("Names", export_names(wbk.names))
+    Call d.Add("Names", export_names(wbk.Names))
     
     'ReDim sht_array(1 To wbk.Sheets.Count) As Dictionary
     Dim sht_list: Set sht_list = CreateObject("System.Collections.ArrayList")
@@ -123,7 +123,7 @@ Function export_worksheet(sht As Worksheet)
 End Function
 
 
-Function export_names(nms As names)
+Function export_names(nms As Names)
     If nms.Count = 0 Then Exit Function
     
     Dim names_dict As Dictionary
