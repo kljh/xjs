@@ -16,6 +16,9 @@ Option Explicit
 ' DATETIME or TIMESTAMP : A date and time combination. TIMESTAMP values are stored as the number of seconds since the Unix epoch.
 ' DOUBLE or LONG
 
+'Const OLEDB_PROVIDER = "Microsoft.Jet.OLEDB.4.0"
+Const OLEDB_PROVIDER = "Microsoft.ACE.OLEDB.12.0"
+
 Sub ODBCTest()
     Dim db
     Set db = ODBCCreateMDBConnection()
@@ -72,16 +75,17 @@ Function VBSQL(data, SQLCmd As String, Optional schema As String)
 End Function
 
 Function ODBCCreateMDBConnection( _
-    Optional mdb As String = "C:\temp\jetdb.mdb" _
+    Optional mdb As String = "C:\temp\db.mdb" _
 )
     If Len(Dir(mdb)) = 0 Then
         Dim ctlg
         Set ctlg = New ADOX.Catalog
-        ctlg.Create "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & mdb
+        ctlg.Create "Provider=" & OLEDB_PROVIDER & ";Data Source=" & mdb
+        
     End If
     
     Dim cn As New ADODB.Connection
-    cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+    cn.Provider = OLEDB_PROVIDER
     'cn.ConnectionString = ...
     
     ' Added line for disconnected recordset (e.g. RecordCount)
