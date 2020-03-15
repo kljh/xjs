@@ -10,7 +10,7 @@
   "version": "0.0.0",
   "dependencies": {
     "@types/node": "^9.4.7",
-    "acorn": "^5.5.3",
+    "acorn": "^5.7.4",
     "escodegen": "^1.9.1",
     "typescript": "^2.7.2"
   }
